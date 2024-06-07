@@ -3,26 +3,33 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 exports.registerUser = async (req, res) => {
-    const { fName, lName, email, password, role } = req.body;
-    try {
-        const userExists = await User.findOne({ email });
-        if (userExists) {
-            return res.status(400).json({ message: 'User already exists' });
-        }
-        const user = await User.create({
-            fName,
-            lName,
-            email,
-            password: bcrypt.hashSync(password, 10),
-            role
-        });
-        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
-            expiresIn: '1h'
-        });
-        res.status(201).json({ token });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+  const { fName, lName, email, addresss, phoneNumber, password, role } =
+    req.body;
+  try {
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: "User already exists" });
     }
+    const user = await User.create({
+      fName,
+      lName,
+      email,
+      address,
+      phoneNumber,
+      password: bcrypt.hashSync(password, 10),
+      role,
+    });
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.status(201).json({ token });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 exports.loginUser = async (req, res) => {

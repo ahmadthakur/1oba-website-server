@@ -5,9 +5,9 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.7.0",
     "mongodb-memory-server": "^9.3.0",
     "mongoose": "^8.4.1"
   },
-
   "start": "nodemon server.js"
 }
