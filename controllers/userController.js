@@ -20,7 +20,15 @@ exports.registerUser = async (req, res) => {
       role,
     });
     const token = jwt.sign(
-      { userId: user._id, role: user.role },
+      {
+        userId: user._id,
+        role: user.role,
+        emai: user.email,
+        fName: user.fName,
+        lName: user.lName,
+        address: user.address,
+        phoneNumber: user.phoneNumber,
+      },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h",
@@ -29,6 +37,7 @@ exports.registerUser = async (req, res) => {
     res.status(201).json({ token });
   } catch (error) {
     res.status(500).json({ message: error.message });
+    console.log(error);
   }
 };
 
@@ -49,7 +58,15 @@ exports.loginUser = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user._id, role: user.role },
+      {
+        userId: user._id,
+        role: user.role,
+        emai: user.email,
+        fName: user.fName,
+        lName: user.lName,
+        address: user.address,
+        phoneNumber: user.phoneNumber,
+      },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h",
