@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 exports.registerUser = async (req, res) => {
-  const { fName, lName, email, addresss, phoneNumber, password, role } =
+  const { fName, lName, email, address, phoneNumber, password, role } =
     req.body;
   try {
     const userExists = await User.findOne({ email });
