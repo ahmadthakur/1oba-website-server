@@ -5,10 +5,8 @@ const PropertySchema = new mongoose.Schema({
     type: String,
     description: String,
     price: Number,
-    area: Number,
-    rooms: Number,
+    numberOfRooms: Number,
     location: String,
-    imageUrl: String,
 });
 
 module.exports = mongoose.model('Property', PropertySchema);
