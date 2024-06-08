@@ -3,8 +3,36 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 exports.registerUser = async (req, res) => {
-  const { fName, lName, email, address, phoneNumber, password, role } =
-    req.body;
+  const {
+    fName,
+    lName,
+    address,
+    phoneNumber,
+    email,
+    hasMortgageOffer,
+    purchasePriceRange,
+    propertyType,
+    bedrooms,
+    parking,
+    preferredLocation,
+    budgetRange,
+    moveInDate,
+    propertyCondition,
+    tenure,
+    propertyFeatures,
+    additionalRequirements,
+    heardAboutUs,
+    currentlyRenting,
+    workingWithAgent,
+    needMortgageAssistance,
+    interestedInNewBuild,
+    preferencesForSchools,
+    considerRenovation,
+    openToViewingOutsideArea,
+    accessibilityRequirements,
+    viewingAvailability,
+    password,
+  } = req.body;
   try {
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -13,22 +41,35 @@ exports.registerUser = async (req, res) => {
     const user = await User.create({
       fName,
       lName,
-      email,
       address,
       phoneNumber,
+      email,
+      hasMortgageOffer,
+      purchasePriceRange,
+      propertyType,
+      bedrooms,
+      parking,
+      preferredLocation,
+      budgetRange,
+      moveInDate,
+      propertyCondition,
+      tenure,
+      propertyFeatures,
+      additionalRequirements,
+      heardAboutUs,
+      currentlyRenting,
+      workingWithAgent,
+      needMortgageAssistance,
+      interestedInNewBuild,
+      preferencesForSchools,
+      considerRenovation,
+      openToViewingOutsideArea,
+      accessibilityRequirements,
+      viewingAvailability,
       password: bcrypt.hashSync(password, 10),
-      role,
     });
     const token = jwt.sign(
-      {
-        userId: user._id,
-        role: user.role,
-        emai: user.email,
-        fName: user.fName,
-        lName: user.lName,
-        address: user.address,
-        phoneNumber: user.phoneNumber,
-      },
+      { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h",
@@ -37,7 +78,6 @@ exports.registerUser = async (req, res) => {
     res.status(201).json({ token });
   } catch (error) {
     res.status(500).json({ message: error.message });
-    console.log(error);
   }
 };
 
@@ -58,15 +98,7 @@ exports.loginUser = async (req, res) => {
     }
 
     const token = jwt.sign(
-      {
-        userId: user._id,
-        role: user.role,
-        emai: user.email,
-        fName: user.fName,
-        lName: user.lName,
-        address: user.address,
-        phoneNumber: user.phoneNumber,
-      },
+      { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h",
